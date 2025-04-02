@@ -17,14 +17,27 @@ jobs:
         with:
           python-version: '3.x'
 
-      - name: Copy files to deployment directory
+      - name: Create deployment structure
         run: |
           mkdir -p public
-          cp *.py public/
-          cp *.html public/
-          cp *.css public/
-          cp -r image_resolution_checker public/
-          cp -r leetcode_analyzer public/
+          # Copy Python files from root
+          cp interactive_quiz_game.py public/
+          cp password_generator.py public/
+          cp rock_paper_scissors_game.py public/
+          cp snake_game.py public/
+          # Copy README
+          cp README.md public/
+          
+          # Copy image_resolution_checker directory
+          mkdir -p public/image_resolution_checker
+          cp image_resolution_checker/*.py public/image_resolution_checker/
+          cp image_resolution_checker/*.{jpg,jpeg,png,gif,bmp} public/image_resolution_checker/ || true
+          
+          # Copy leetcode_analyzer directory
+          mkdir -p public/leetcode_analyzer
+          cp leetcode_analyzer/*.py public/leetcode_analyzer/
+          cp leetcode_analyzer/*.html public/leetcode_analyzer/
+          cp leetcode_analyzer/*.css public/leetcode_analyzer/
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
