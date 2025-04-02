@@ -19,25 +19,32 @@ jobs:
 
       - name: Create deployment structure
         run: |
+          # Create public directory
           mkdir -p public
-          # Copy Python files from root
-          cp interactive_quiz_game.py public/
-          cp password_generator.py public/
-          cp rock_paper_scissors_game.py public/
-          cp snake_game.py public/
+          
+          # Copy specific Python files from root
+          cp interactive_quiz_game.py public/ || true
+          cp password_generator.py public/ || true
+          cp rock_paper_scissors_game.py public/ || true
+          cp snake_game.py public/ || true
+          
           # Copy README
-          cp README.md public/
+          cp README.md public/ || true
           
-          # Copy image_resolution_checker directory
-          mkdir -p public/image_resolution_checker
-          cp image_resolution_checker/*.py public/image_resolution_checker/
-          cp image_resolution_checker/*.{jpg,jpeg,png,gif,bmp} public/image_resolution_checker/ || true
+          # Create and copy image_resolution_checker directory
+          if [ -d "image_resolution_checker" ]; then
+            mkdir -p public/image_resolution_checker
+            cp image_resolution_checker/image_info.py public/image_resolution_checker/ || true
+            cp image_resolution_checker/img*.{jpg,jpeg,png,gif,bmp} public/image_resolution_checker/ 2>/dev/null || true
+          fi
           
-          # Copy leetcode_analyzer directory
-          mkdir -p public/leetcode_analyzer
-          cp leetcode_analyzer/*.py public/leetcode_analyzer/
-          cp leetcode_analyzer/*.html public/leetcode_analyzer/
-          cp leetcode_analyzer/*.css public/leetcode_analyzer/
+          # Create and copy leetcode_analyzer directory
+          if [ -d "leetcode_analyzer" ]; then
+            mkdir -p public/leetcode_analyzer
+            cp leetcode_analyzer/leetcode_status_analyzer.py public/leetcode_analyzer/ || true
+            cp leetcode_analyzer/index.html public/leetcode_analyzer/ || true
+            cp leetcode_analyzer/style.css public/leetcode_analyzer/ || true
+          fi
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
