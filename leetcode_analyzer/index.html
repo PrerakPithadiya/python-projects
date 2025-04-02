@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeetCode Stats Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1>LeetCode Stats Analyzer</h1>
+        <p>View the project on <a href="https://github.com/prerak-pithadiya/python-projects">GitHub</a></p>
+        <div class="code-section">
+            <h2>Python Script</h2>
+            <pre><code id="pythonCode"></code></pre>
+        </div>
+    </div>
+    <script>
+        fetch('leetcode_status_analyzer.py')
+            .then(response => response.text())
+            .then(code => {
+                document.getElementById('pythonCode').textContent = code;
+            });
+    </script>
+</body>
+
+</html>
